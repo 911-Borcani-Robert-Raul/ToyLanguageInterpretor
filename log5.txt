@@ -1,0 +1,48 @@
+Program id: 5
+ExeStack:
+(IF(2 >= 5) THEN(print(conditia e adevarata))ELSE(print(conditia nu e adevarata)))
+Symtable:
+{}
+Out
+[]
+FileTable:
+{}
+HeapTable:
+{}
+
+Program id: 5
+ExeStack:
+print(conditia nu e adevarata)
+Symtable:
+{}
+Out
+[]
+FileTable:
+{}
+HeapTable:
+{}
+
+Program id: 5
+ExeStack:
+print(conditia nu e adevarata)
+Symtable:
+{}
+Out
+[]
+FileTable:
+{}
+HeapTable:
+{}
+
+Program id: 5
+ExeStack:
+
+Symtable:
+{}
+Out
+[conditia nu e adevarata]
+FileTable:
+{}
+HeapTable:
+{}
+
