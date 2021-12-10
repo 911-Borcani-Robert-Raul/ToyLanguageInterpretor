@@ -44,6 +44,18 @@ public class NewStatement implements IStatement {
     }
 
     @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typeVar = typeEnv.lookup(variableName);
+        Type typeExpr = expression.typecheck(typeEnv);
+        if (typeVar.equals(new RefType(typeExpr))) {
+            return typeEnv;
+        }
+        else {
+            throw new MyException("NEW statement: right hand side and left hand side have different types");
+        }
+    }
+
+    @Override
     public IStatement deepCopy() {
         return new NewStatement(variableName, expression.deepCopy());
     }

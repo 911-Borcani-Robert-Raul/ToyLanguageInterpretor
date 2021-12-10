@@ -1,7 +1,9 @@
 package model.expressions;
 
 import model.MyException;
+import model.types.BoolType;
 import model.types.IntType;
+import model.types.Type;
 import model.utils.MyHeap;
 import model.utils.MyIDictionary;
 import model.values.BoolValue;
@@ -47,6 +49,25 @@ public class RelationalExpression implements MyExpression {
         }
 
         return result;
+    }
+
+    @Override
+    public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type type1, type2;
+        type1 = expression1.typecheck(typeEnv);
+        type2 = expression2.typecheck(typeEnv);
+
+        if (type1.equals(new IntType())) {
+            if (type2.equals(new IntType())) {
+                return new BoolType();
+            }
+            else {
+                throw new MyException("Second operand not integer");
+            }
+        }
+        else {
+            throw new MyException("Second operand not integer");
+        }
     }
 
     @Override

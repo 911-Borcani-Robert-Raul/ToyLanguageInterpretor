@@ -2,6 +2,7 @@ package model.expressions;
 
 import model.*;
 import model.types.IntType;
+import model.types.Type;
 import model.utils.MyHeap;
 import model.utils.MyIDictionary;
 import model.values.IntValue;
@@ -60,6 +61,25 @@ public class ArithmeticExpression implements MyExpression {
         else
             throw new MyException("first operand is not an integer");
         return null;
+    }
+
+    @Override
+    public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type type1, type2;
+        type1 = expression1.typecheck(typeEnv);
+        type2 = expression2.typecheck(typeEnv);
+
+        if (type1.equals(new IntType())) {
+            if (type2.equals(new IntType())) {
+                return new IntType();
+            }
+            else {
+                throw new MyException("Second operand not integer");
+            }
+        }
+        else {
+            throw new MyException("Second operand not integer");
+        }
     }
 
     @Override

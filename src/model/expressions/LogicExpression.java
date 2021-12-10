@@ -2,6 +2,8 @@ package model.expressions;
 
 import model.*;
 import model.types.BoolType;
+import model.types.IntType;
+import model.types.Type;
 import model.utils.MyHeap;
 import model.utils.MyIDictionary;
 import model.values.BoolValue;
@@ -45,6 +47,25 @@ public class LogicExpression implements MyExpression {
             }
         } else {
             throw new MyException("First expression not boolean!");
+        }
+    }
+
+    @Override
+    public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type type1, type2;
+        type1 = expression1.typecheck(typeEnv);
+        type2 = expression2.typecheck(typeEnv);
+
+        if (type1.equals(new BoolType())) {
+            if (type2.equals(new BoolType())) {
+                return new BoolType();
+            }
+            else {
+                throw new MyException("Second operand not bool");
+            }
+        }
+        else {
+            throw new MyException("Second operand not bool");
         }
     }
 

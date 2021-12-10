@@ -1,6 +1,8 @@
 package model.expressions;
 
 import model.MyException;
+import model.types.RefType;
+import model.types.Type;
 import model.utils.MyDictionary;
 import model.utils.MyHeap;
 import model.utils.MyIDictionary;
@@ -25,6 +27,17 @@ public class HeapReadingExpression implements MyExpression {
             throw new MyException("Address not defined");
 
         return heap.lookup(address);
+    }
+
+    @Override
+    public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type type = expression.typecheck(typeEnv);
+        if (type instanceof RefType ref) {
+            return ref.getInner();
+        }
+        else {
+            throw new MyException("The HeapReadingExpression argument not a Ref Type");
+        }
     }
 
     @Override

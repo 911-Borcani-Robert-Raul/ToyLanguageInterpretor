@@ -1,4 +1,5 @@
 import controller.Controller;
+import model.MyException;
 import model.ProgramState;
 import model.expressions.*;
 import model.statements.*;
@@ -25,6 +26,8 @@ public class Main {
         IStatement ex1 = new CompoundStatement(new VariableDeclarationStatement("v", new IntType()),
                 new CompoundStatement(new AssignStatement("v", new ValueExpression(new IntValue(2))),
                         new PrintStatement(new VariableExpression("v"))));
+        ex1.typecheck(new MyDictionary<>());
+
         ProgramState program1 = getProgram(ex1);
         Controller controller1 = getController(program1, "log1.txt");
 
@@ -38,6 +41,8 @@ public class Main {
                                         new ArithmeticExpression('+',new VariableExpression("a"),
                                                 new ValueExpression(new IntValue(1)))),
                                         new PrintStatement(new VariableExpression("b"))))));
+        ex2.typecheck(new MyDictionary<>());
+
         ProgramState program2 = getProgram(ex2);
         Controller controller2 = getController(program2, "log2.txt");
 
@@ -47,6 +52,8 @@ public class Main {
                                 new CompoundStatement(new IfStatement(new VariableExpression("a"),new AssignStatement("v",
                                         new ValueExpression(new IntValue(2))), new AssignStatement("v",
                                         new ValueExpression(new IntValue(3)))), new PrintStatement(new VariableExpression("v"))))));
+        ex3.typecheck(new MyDictionary<>());
+
         ProgramState program3 = getProgram(ex3);
         Controller controller3 = getController(program3, "log3.txt");
 
@@ -60,6 +67,8 @@ public class Main {
                                                                         "varc"), new CompoundStatement(new PrintStatement(new VariableExpression("varc")),
                                                                         new CompoundStatement( new CloseFileRead(new VariableExpression("fileName")),
                                                                                 new CloseFileRead(new VariableExpression("fileName")) )))))))));
+        ex4.typecheck(new MyDictionary<>());
+
         ProgramState program4 = getProgram(ex4);
         Controller controller4 = getController(program4, "log4.txt");
 
@@ -67,6 +76,8 @@ public class Main {
                 new ValueExpression(new IntValue(5)), RelationalExpressionOperator.GreaterThanOrEqual),
                 new PrintStatement(new ValueExpression(new StringValue("conditia e adevarata"))),
                 new PrintStatement(new ValueExpression(new StringValue("conditia nu e adevarata"))));
+        ex5.typecheck(new MyDictionary<>());
+
         ProgramState program5 = getProgram(ex5);
         Controller controller5 = getController(program5, "log5.txt");
 
@@ -76,6 +87,8 @@ public class Main {
                                 new CompoundStatement(new NewStatement("a", new VariableExpression("v")),
                                         new CompoundStatement(new NewStatement("v", new ValueExpression(new IntValue(30))),
                                                 new PrintStatement(new HeapReadingExpression(new HeapReadingExpression(new VariableExpression("a")))))))));
+        ex6.typecheck(new MyDictionary<>());
+
         ProgramState program6 = getProgram(ex6);
         Controller controller6 = getController(program6, "log6.txt");
 
@@ -85,6 +98,8 @@ public class Main {
                                 RelationalExpressionOperator.GreaterThan), new CompoundStatement(new PrintStatement((new VariableExpression("v"))),
                         new AssignStatement("v", new ArithmeticExpression(ArithmeticExpressionOperator.MINUS, new VariableExpression("v"),
                                 new ValueExpression(new IntValue(1))))))));
+        ex7.typecheck(new MyDictionary<>());
+
         ProgramState program7 = getProgram(ex7);
         Controller controller7 = getController(program7, "log7.txt");
         
@@ -97,6 +112,8 @@ public class Main {
                                                         new HeapReadingExpression(new HeapReadingExpression(new VariableExpression("a"))),
                                                         new ValueExpression(new IntValue(5))))
                                         )))));
+        ex8.typecheck(new MyDictionary<>());
+
         ProgramState program8 = getProgram(ex8);
         Controller controller8 = getController(program8, "log8.txt");
 
@@ -104,6 +121,8 @@ public class Main {
                 new CompoundStatement(new NewStatement("v", new ValueExpression(new IntValue(20))),
                                         new CompoundStatement(new NewStatement("v", new ValueExpression(new IntValue(30))),
                                                 new PrintStatement(new HeapReadingExpression((new VariableExpression("v")))))));
+        ex9.typecheck(new MyDictionary<>());
+
         ProgramState program9 = getProgram(ex9);
         Controller controller9 = getController(program9, "log9.txt");
 
@@ -121,8 +140,20 @@ public class Main {
                                                 new PrintStatement(new VariableExpression("v")),
                                                         new PrintStatement(new HeapReadingExpression(new VariableExpression("a"))))
                                         )))));
+        ex10.typecheck(new MyDictionary<>());
+
         ProgramState program10 = getProgram(ex10);
         Controller controller10 = getController(program10, "log10.txt");
+
+//        IStatement ex11 = new CompoundStatement(new CompoundStatement(new CompoundStatement(
+//                new VariableDeclarationStatement("a", new StringType()),
+//                new VariableDeclarationStatement("b", new IntType())),
+//                new AssignStatement("a", new ValueExpression(new StringValue("abdc")))),
+//                new AssignStatement("b", new VariableExpression("a")));
+//        ex11.typecheck(new MyDictionary<>());
+//
+//        ProgramState program11 = getProgram(ex11);
+//        Controller controller11 = getController(program11, "log11.txt");
 
         TextMenu menu = new TextMenu();
         menu.addCommand(new ExitCommand("0", "exit"));
@@ -136,6 +167,7 @@ public class Main {
         menu.addCommand(new RunExample("8", ex8.toString(), controller8));
         menu.addCommand(new RunExample("9", ex9.toString(), controller9));
         menu.addCommand(new RunExample("10", ex10.toString(), controller10));
+//        menu.addCommand(new RunExample("11", ex11.toString(), controller11));
         menu.show();
     }
 

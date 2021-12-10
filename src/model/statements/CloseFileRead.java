@@ -4,6 +4,7 @@ import model.MyException;
 import model.ProgramState;
 import model.expressions.MyExpression;
 import model.types.StringType;
+import model.types.Type;
 import model.utils.MyIDictionary;
 import model.values.StringValue;
 import model.values.Value;
@@ -41,6 +42,17 @@ public class CloseFileRead implements IStatement {
 
         fileTable.delete(fileName);
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type exprType = expression.typecheck(typeEnv);
+        if (exprType.equals(new StringType())) {
+            return typeEnv;
+        }
+        else {
+            throw new MyException("Provided expression for CloseFileRead is not a string");
+        }
     }
 
     @Override

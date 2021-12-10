@@ -4,6 +4,8 @@ import model.MyException;
 import model.ProgramState;
 import model.expressions.MyExpression;
 import model.types.BoolType;
+import model.types.Type;
+import model.utils.MyIDictionary;
 import model.values.BoolValue;
 import model.values.Value;
 
@@ -31,6 +33,18 @@ public class WhileStatement implements IStatement {
         }
 
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typeExpr = expression.typecheck(typeEnv);
+        if (typeExpr.equals(new BoolType())) {
+            statement.typecheck(typeEnv.deepCopy());
+            return typeEnv;
+        }
+        else {
+            throw new MyException("The condition of WHILE has not the type bool");
+        }
     }
 
     @Override

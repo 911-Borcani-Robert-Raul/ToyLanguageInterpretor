@@ -5,6 +5,7 @@ import model.ProgramState;
 import model.expressions.MyExpression;
 import model.types.IntType;
 import model.types.StringType;
+import model.types.Type;
 import model.utils.MyIDictionary;
 import model.values.IntValue;
 import model.values.StringValue;
@@ -64,6 +65,21 @@ public class ReadStatement implements IStatement {
         }
 
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typeExpr = expression.typecheck(typeEnv);
+        Type varType = typeEnv.lookup(variable);
+        
+        if (!varType.equals(new IntType())) {
+            throw new MyException("Variable type for readStatement not integer");
+        }
+        if (!typeExpr.equals(new StringType())) {
+            throw new MyException("Expression type for readStatement not string");
+        }
+
+        return typeEnv;
     }
 
     @Override

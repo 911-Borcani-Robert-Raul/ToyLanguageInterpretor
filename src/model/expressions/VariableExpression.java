@@ -1,6 +1,7 @@
 package model.expressions;
 
 import model.MyException;
+import model.types.Type;
 import model.utils.ADTException;
 import model.utils.MyHeap;
 import model.utils.MyIDictionary;
@@ -21,6 +22,11 @@ public class VariableExpression implements MyExpression {
         catch (ADTException error) {
             throw new ExpressionException("Symtable error: " + error);
         }
+    }
+
+    @Override
+    public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        return typeEnv.lookup(id);
     }
 
     @Override

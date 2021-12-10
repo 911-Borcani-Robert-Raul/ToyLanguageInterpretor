@@ -1,6 +1,8 @@
 package model.statements;
 
 import model.MyException;
+import model.types.Type;
+import model.utils.MyIDictionary;
 import model.utils.MyIStack;
 import model.ProgramState;
 
@@ -24,6 +26,12 @@ public class CompoundStatement implements IStatement {
         stk.push(second);
         stk.push(first);
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        MyIDictionary<String, Type> typeEnv1 = first.typecheck(typeEnv);
+        return second.typecheck(typeEnv1);
     }
 
     @Override

@@ -3,7 +3,10 @@ package model.statements;
 import model.MyException;
 import model.ProgramState;
 import model.expressions.MyExpression;
+import model.types.IntType;
 import model.types.RefType;
+import model.types.StringType;
+import model.types.Type;
 import model.utils.MyHeap;
 import model.utils.MyIDictionary;
 import model.values.RefValue;
@@ -43,6 +46,18 @@ public class HeapWritingStatement implements IStatement {
 
         heapTable.update(address, result);
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typeExpr = expression.typecheck(typeEnv);
+        Type varType = typeEnv.lookup(variableName);
+
+        if (!varType.equals(new RefType(typeExpr))) {
+            throw new MyException("heapWritingStatement: expression not of inner type of varType or varType not a ref");
+        }
+
+        return typeEnv;
     }
 
     @Override

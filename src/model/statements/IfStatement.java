@@ -2,6 +2,9 @@ package model.statements;
 
 import model.*;
 import model.expressions.MyExpression;
+import model.types.BoolType;
+import model.types.Type;
+import model.utils.MyIDictionary;
 import model.utils.MyIStack;
 import model.values.BoolValue;
 import model.values.Value;
@@ -39,6 +42,19 @@ public class IfStatement implements IStatement {
         }
         else
             throw new MyException("please provide a boolean expression in an if statement");
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typeExpr = exp.typecheck(typeEnv);
+        if (typeExpr.equals(new BoolType())) {
+            thenStatement.typecheck(typeEnv.deepCopy());
+            elseStatement.typecheck(typeEnv.deepCopy());
+            return typeEnv;
+        }
+        else {
+            throw new MyException("The condition of IF has not the type bool");
+        }
     }
 
     @Override
